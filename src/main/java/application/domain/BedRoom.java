@@ -1,6 +1,5 @@
 package application.domain;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class BedRoom {
@@ -14,6 +13,9 @@ public class BedRoom {
     private BedRoomType bedRoomType;
     private double price;
     private String state;
+
+
+    // Constructors
 
     public BedRoom(){
 
@@ -30,6 +32,9 @@ public class BedRoom {
     public BedRoom(String room) {
         this.room = room;
     }
+
+    // Getter and Setters
+
 
     public int getRoomId() {
         return roomId;
@@ -75,12 +80,6 @@ public class BedRoom {
 
     // Methods
 
-
-    public void update(Booking productoEditado) {
-    }
-
-    public void delete(int id) {
-    }
 
 
 }

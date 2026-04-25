@@ -1,65 +1,57 @@
 package application.service;
 
 import application.domain.Guest;
-import application.repository.GuestRepository;
 import application.service.outputs.GuestService;
+import application.service.ports.GuestRepositoryPort;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
 
 public class GuestServiceImpl implements GuestService {
 
-    Scanner sc = new Scanner(System.in);
+    private final GuestRepositoryPort guestRepositoryPort;
 
-    private final GuestRepository guestRepository;
-
-    public GuestServiceImpl(GuestRepository guestRepository){
-
-        this.guestRepository= guestRepository;
-
+    public GuestServiceImpl(GuestRepositoryPort guestRepositoryPort) {
+        this.guestRepositoryPort = guestRepositoryPort;
     }
 
-
-
-
     @Override
-    public Guest createGuest(Guest guest) {
-
-        System.out.println("Ingrese el id del Huesped");
-        int id = sc.nextInt();
-        sc.nextLine();
-        guest.setId(id);
-        System.out.println("Ingrese el nombre del Huesped");
-        String name = sc.nextLine();
-        guest.setName(name);
-        System.out.println("INgrese el apellido");
-        String lastName = sc.nextLine();
-        guest.setLastName(lastName);
-        System.out.println("ingrese el email");
-        String email = sc.nextLine();
-        guest.setEmail(email);
-        System.out.println("Ingrese el password ");
-        String password = sc.nextLine();
-        guest.setPassword(password);
-        System.out.println("Estado Huesped ");        boolean state = sc.nextBoolean();
-        guest.setState(state);
-        System.out.println("Origen");
-        String origin = sc.nextLine();
-        guest.setOrigin(origin);
-        System.out.println("Tipo de Huesped");
-        String guestType = sc.nextLine();
-        guest.setGuestType(guestType);
-
+    public Guest createGuest(int id, String name, String lastName, String email, String password, boolean state, String origin, String guestType) {
+        if (guestRepositoryPort.findGuestById(id).isPresent()) {
+            throw new IllegalArgumentException("Ya existe un huésped con id: " + id);
+        }
+        Guest guest = new Guest(id, name, lastName, email, password, state, origin, guestType);
+        guestRepositoryPort.saveGuest(guest);
         return guest;
     }
 
     @Override
-    public Guest updateGuest(Guest guest) {
-        return null;
+    public Guest updateGuest(int id, String name, String lastName, String email, String password, boolean state, String origin, String guestType) {
+        Guest guest = guestRepositoryPort.findGuestById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Huésped no encontrado"));
+        guest.setName(name);
+        guest.setLastName(lastName);
+        guest.setEmail(email);
+        guest.setPassword(password);
+        guest.setState(state);
+        guest.setOrigin(origin);
+        guest.setGuestType(guestType);
+        guestRepositoryPort.updateGuest(id, guest);
+        return guest;
     }
 
     @Override
     public Optional<Guest> getGuestById(int id) {
-        return Optional.empty();
+        return guestRepositoryPort.findGuestById(id);
+    }
+
+    @Override
+    public List<Guest> getAllGuests() {
+        return guestRepositoryPort.findAllGuests();
+    }
+
+    @Override
+    public void deleteGuestById(int id) {
+        guestRepositoryPort.deleteGuestById(id);
     }
 }

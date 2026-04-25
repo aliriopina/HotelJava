@@ -1,12 +1,8 @@
 package application.service.outputs;
 
-import application.domain.Guest;
-
-import java.util.List;
-
+/**
+ * @deprecated Reemplazado por {@link GuestService}
+ */
+@Deprecated
 public interface GuestAdminService {
-
-    public List<Guest> getGuests();
-    public void deleteGuest(int id);
-
 }

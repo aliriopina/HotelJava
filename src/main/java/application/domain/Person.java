@@ -1,7 +1,6 @@
 package application.domain;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class Person {
 
@@ -20,7 +19,7 @@ public class Person {
     public Person() {
     }
 
-    public Person(String email) {
+    public Person(String email){
         this.email = email;
     }
 
@@ -35,11 +34,11 @@ public class Person {
 
     // Getters and Setters
 
-    public int getId() {
+    public int getId(){
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id){
         this.id = id;
     }
 
