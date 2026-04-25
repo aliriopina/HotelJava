@@ -1,6 +1,7 @@
 package application.service;
 
 import application.domain.Guest;
+import application.domain.enums.GuestType;
 import application.service.outputs.GuestService;
 import application.service.ports.GuestRepositoryPort;
 
@@ -16,7 +17,7 @@ public class GuestServiceImpl implements GuestService {
     }
 
     @Override
-    public Guest createGuest(int id, String name, String lastName, String email, String password, boolean state, String origin, String guestType) {
+    public Guest createGuest(int id, String name, String lastName, String email, String password, boolean state, String origin, GuestType guestType) {
         if (guestRepositoryPort.findGuestById(id).isPresent()) {
             throw new IllegalArgumentException("Ya existe un huésped con id: " + id);
         }
@@ -26,7 +27,7 @@ public class GuestServiceImpl implements GuestService {
     }
 
     @Override
-    public Guest updateGuest(int id, String name, String lastName, String email, String password, boolean state, String origin, String guestType) {
+    public Guest updateGuest(int id, String name, String lastName, String email, String password, boolean state, String origin, GuestType guestType) {
         Guest guest = guestRepositoryPort.findGuestById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Huésped no encontrado"));
         guest.setName(name);

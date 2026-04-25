@@ -1,6 +1,7 @@
 package application.repository;
 
 import application.domain.Employee;
+import application.domain.enums.EmployeePosition;
 import application.service.ports.EmployeeRepositoryPort;
 
 import java.util.ArrayList;
@@ -12,8 +13,8 @@ public class EmployeeRepository implements EmployeeRepositoryPort {
 
     List<Employee> employees = new ArrayList<>(
             Arrays.asList(
-                    new Employee(1, "Carlos", "Ruiz", "carlos@hotel.com", "pass123", true, "Recepcionista", 2500000),
-                    new Employee(2, "Laura", "Torres", "laura@hotel.com", "pass456", true, "Administrador", 4000000)
+                    new Employee(1, "Carlos", "Ruiz", "carlos@hotel.com", "pass123", true, EmployeePosition.RECEPCIONISTA, 2500000),
+                    new Employee(2, "Laura", "Torres", "laura@hotel.com", "pass456", true, EmployeePosition.ADMINISTRADOR, 4000000)
             )
     );
 

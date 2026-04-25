@@ -1,15 +1,17 @@
 package application.domain;
 
+import application.domain.enums.GuestType;
+
 public class Guest extends Person {
 
     private String origin;
-    private String guestType;
+    private GuestType guestType;
 
     public Guest() {
         super();
     }
 
-    public Guest(int id, String name, String lastName, String email, String password, Boolean state, String origin, String guestType) {
+    public Guest(int id, String name, String lastName, String email, String password, Boolean state, String origin, GuestType guestType) {
         super(id, name, lastName, email, password, state);
         this.origin = origin;
         this.guestType = guestType;
@@ -23,11 +25,11 @@ public class Guest extends Person {
         this.origin = origin;
     }
 
-    public String getGuestType() {
+    public GuestType getGuestType() {
         return guestType;
     }
 
-    public void setGuestType(String guestType) {
+    public void setGuestType(GuestType guestType) {
         this.guestType = guestType;
     }
 
@@ -35,7 +37,7 @@ public class Guest extends Person {
     public String toString() {
         return "Guest{" +
                 "origin='" + origin + '\'' +
-                ", guestType='" + guestType + '\'' +
+                ", guestType='" + guestType.getDescription() + '\'' +
                 "} " + super.toString();
     }
 }

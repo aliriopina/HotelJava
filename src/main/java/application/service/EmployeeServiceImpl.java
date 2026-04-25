@@ -1,6 +1,7 @@
 package application.service;
 
 import application.domain.Employee;
+import application.domain.enums.EmployeePosition;
 import application.service.outputs.EmployeeService;
 import application.service.ports.EmployeeRepositoryPort;
 
@@ -16,7 +17,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee createEmployee(int id, String name, String lastName, String email, String password, boolean state, String position, double salary) {
+    public Employee createEmployee(int id, String name, String lastName, String email, String password, boolean state, EmployeePosition position, double salary) {
         if (employeeRepositoryPort.findEmployeeById(id).isPresent()) {
             throw new IllegalArgumentException("Ya existe un empleado con id: " + id);
         }
@@ -26,7 +27,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee updateEmployee(int id, String name, String lastName, String email, String password, boolean state, String position, double salary) {
+    public Employee updateEmployee(int id, String name, String lastName, String email, String password, boolean state, EmployeePosition position, double salary) {
         Employee employee = employeeRepositoryPort.findEmployeeById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Empleado no encontrado"));
         employee.setName(name);

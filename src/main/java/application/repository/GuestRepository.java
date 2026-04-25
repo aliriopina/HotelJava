@@ -1,6 +1,7 @@
 package application.repository;
 
 import application.domain.Guest;
+import application.domain.enums.GuestType;
 import application.service.ports.GuestRepositoryPort;
 
 import java.util.ArrayList;
@@ -12,8 +13,8 @@ public class GuestRepository implements GuestRepositoryPort {
 
     List<Guest> guests = new ArrayList<>(
             Arrays.asList(
-                    new Guest(1, "Maria", "Gomez", "mg@mail.com", "123456", true, "Medellín", "Nuevo"),
-                    new Guest(2, "Juan", "Perez", "juan@mail.com", "12345678", true, "Bogotá", "Frecuente")
+                    new Guest(1, "Maria", "Gomez", "mg@mail.com", "123456", true, "Medellín", GuestType.NUEVO),
+                    new Guest(2, "Juan", "Perez", "juan@mail.com", "12345678", true, "Bogotá", GuestType.FRECUENTE)
             )
     );
 

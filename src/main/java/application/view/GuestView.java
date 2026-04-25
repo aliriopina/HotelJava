@@ -1,6 +1,7 @@
 package application.view;
 
 import application.domain.Guest;
+import application.domain.enums.GuestType;
 import application.service.outputs.GuestService;
 import application.util.FormValidationUtil;
 
@@ -14,6 +15,17 @@ public class GuestView {
         this.guestService = guestService;
     }
 
+    private GuestType selectGuestType() {
+        System.out.println("Seleccione el tipo de huésped: 1. Nuevo  2. Frecuente  3. VIP");
+        int option = FormValidationUtil.validateInt("Opción");
+        return switch (option) {
+            case 1 -> GuestType.NUEVO;
+            case 2 -> GuestType.FRECUENTE;
+            case 3 -> GuestType.VIP;
+            default -> throw new IllegalArgumentException("Tipo de huésped no válido");
+        };
+    }
+
     public void createGuest() {
         System.out.println("Crear huésped");
         try {
@@ -24,7 +36,7 @@ public class GuestView {
             String password = FormValidationUtil.validateString("Ingrese el password");
             boolean state = FormValidationUtil.validateBoolean("Estado (true/false)");
             String origin = FormValidationUtil.validateString("Ingrese el origen");
-            String guestType = FormValidationUtil.validateString("Ingrese el tipo de huésped");
+            GuestType guestType = selectGuestType();
 
             Guest created = guestService.createGuest(id, name, lastName, email, password, state, origin, guestType);
             System.out.println("Huésped creado: " + created.getId());
@@ -42,7 +54,7 @@ public class GuestView {
                     + guest.getLastName() + " "
                     + guest.getEmail() + " "
                     + guest.getOrigin() + " "
-                    + guest.getGuestType() + " "
+                    + guest.getGuestType().getDescription() + " "
                     + guest.getState());
         }
     }
@@ -56,7 +68,7 @@ public class GuestView {
                 + guest.getLastName() + " "
                 + guest.getEmail() + " "
                 + guest.getOrigin() + " "
-                + guest.getGuestType() + " "
+                + guest.getGuestType().getDescription() + " "
                 + guest.getState());
     }
 
@@ -72,37 +84,22 @@ public class GuestView {
         String password = current.getPassword();
         boolean state = current.getState();
         String origin = current.getOrigin();
-        String guestType = current.getGuestType();
+        GuestType guestType = current.getGuestType();
 
         System.out.println("Huésped actual: id=" + id + " nombre=" + name + " apellido=" + lastName
-                + " email=" + email + " origen=" + origin + " tipo=" + guestType + " estado=" + state);
+                + " email=" + email + " origen=" + origin + " tipo=" + guestType.getDescription() + " estado=" + state);
 
         int option = FormValidationUtil.validateInt("1. Nombre  2. Apellido  3. Email  4. Password  5. Estado  6. Origen  7. Tipo");
 
         switch (option) {
-            case 1:
-                name = FormValidationUtil.validateString("Nuevo nombre");
-                break;
-            case 2:
-                lastName = FormValidationUtil.validateString("Nuevo apellido");
-                break;
-            case 3:
-                email = FormValidationUtil.validateString("Nuevo email");
-                break;
-            case 4:
-                password = FormValidationUtil.validateString("Nuevo password");
-                break;
-            case 5:
-                state = FormValidationUtil.validateBoolean("Nuevo estado (true/false)");
-                break;
-            case 6:
-                origin = FormValidationUtil.validateString("Nuevo origen");
-                break;
-            case 7:
-                guestType = FormValidationUtil.validateString("Nuevo tipo de huésped");
-                break;
-            default:
-                System.out.println("Seleccione una opción válida");
+            case 1 -> name = FormValidationUtil.validateString("Nuevo nombre");
+            case 2 -> lastName = FormValidationUtil.validateString("Nuevo apellido");
+            case 3 -> email = FormValidationUtil.validateString("Nuevo email");
+            case 4 -> password = FormValidationUtil.validateString("Nuevo password");
+            case 5 -> state = FormValidationUtil.validateBoolean("Nuevo estado (true/false)");
+            case 6 -> origin = FormValidationUtil.validateString("Nuevo origen");
+            case 7 -> guestType = selectGuestType();
+            default -> System.out.println("Seleccione una opción válida");
         }
 
         guestService.updateGuest(id, name, lastName, email, password, state, origin, guestType);
